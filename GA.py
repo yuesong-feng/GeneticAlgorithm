@@ -46,10 +46,10 @@ def Crossover(parents):
 
 
 def Mutation(offsprings, probability = 0.1):
-    for gene in offsprings[0]:
-        gene = abs(gene-1) if random.random()<probability else gene
-    for gene in offsprings[1]:
-        gene = abs(gene-1) if random.random()<probability else gene
+    for mutation_point in range(0, len(offsprings[0])):
+        offsprings[0][mutation_point] = abs(offsprings[0][mutation_point]-1) if random.random()<probability else offsprings[0][mutation_point]
+    for mutation_point in range(0, len(offsprings[1])):
+        offsprings[1][mutation_point] = abs(offsprings[1][mutation_point]-1) if random.random()<probability else offsprings[1][mutation_point]
     return offsprings
 
 def next_generation(generation, offsprings):
@@ -65,18 +65,15 @@ count = 0
 while True:
     #Selection
     parents = Selection(ge)
-
     #Crossover
     offsprings = Crossover(parents)
-
     #Mutation
     offsprings = Mutation(offsprings, 0.1)
-
     #next-generation
     ge = next_generation(ge, offsprings)
     Print(ge)
+    print('第{}代，最佳fitness: {}'.format(count, Fitness(ge[0])))
     if Fitness(ge[0]) == 8:
-        print(count)
+        print('完成，迭代次数: {}'.format(count))
         break
-    print('----------------------------')
     count += 1
