@@ -7,7 +7,6 @@ def Print(generation):
         print('fitness: {}'.format(Fitness(chromosome)))
 
 
-
 def Fitness(chromosome: list) -> int:
     return sum(chromosome)
 
@@ -68,7 +67,7 @@ while True:
     #Crossover
     offsprings = Crossover(parents)
     #Mutation
-    offsprings = Mutation(offsprings, 0.1)
+    offsprings = Mutation(offsprings, 0.2)
     #next-generation
     ge = next_generation(ge, offsprings)
     Print(ge)
