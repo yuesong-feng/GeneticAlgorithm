@@ -1,5 +1,5 @@
 import random
-
+import numpy as np
 
 def Print(generation):
     for chromosome in generation:
@@ -8,10 +8,15 @@ def Print(generation):
 
 
 def Fitness(chromosome: list) -> int:
-    return sum(chromosome)
+    value = int('0b'+str(int(''.join(map(str, chromosome)))),2)
+    max = 2**len(chromosome) - 1
+    min = 0
+    x = (((value-min)*(2-(-1))) / (max-min)) + (-1)
+
+    return x * np.sin(10 * np.pi * x) + 2
 
 
-def Initialization(nums = 10, length = 8):
+def Initialization(nums = 10, length = 20):
     generation = []
     for _ in range(nums):
         chromosome = []
@@ -44,7 +49,7 @@ def Crossover(parents):
     return [offspring_0, offspring_1]
 
 
-def Mutation(offsprings, probability = 0.1):
+def Mutation(offsprings, probability = 0.05):
     for mutation_point in range(0, len(offsprings[0])):
         offsprings[0][mutation_point] = abs(offsprings[0][mutation_point]-1) if random.random()<probability else offsprings[0][mutation_point]
     for mutation_point in range(0, len(offsprings[1])):
@@ -67,12 +72,12 @@ while True:
     #Crossover
     offsprings = Crossover(parents)
     #Mutation
-    offsprings = Mutation(offsprings, 0.2)
+    offsprings = Mutation(offsprings)
     #next-generation
     ge = next_generation(ge, offsprings)
     Print(ge)
     print('第{}代，最佳fitness: {}'.format(count, Fitness(ge[0])))
-    if Fitness(ge[0]) == 8:
+    if count == 1000:
         print('完成，迭代次数: {}'.format(count))
         break
     count += 1
