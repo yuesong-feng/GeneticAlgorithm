@@ -1,5 +1,5 @@
 import random
-import numpy as np
+import math
 
 def Print(generation):
     for chromosome in generation:
@@ -13,7 +13,7 @@ def Fitness(chromosome: list) -> int:
     min = 0
     x = (((value-min)*(2-(-1))) / (max-min)) + (-1)
 
-    return x * np.sin(10 * np.pi * x) + 2
+    return x * math.sin(10 * math.pi * x) + 2
 
 
 def Initialization(nums = 10, length = 20):
@@ -62,22 +62,23 @@ def next_generation(generation, offsprings):
     return next_generation[0 : len(generation)]
 
 
-#Initialization
-ge = Initialization()
+if __name__ == "__main__":
+    #Initialization
+    ge = Initialization()
 
-count = 0
-while True:
-    #Selection
-    parents = Selection(ge)
-    #Crossover
-    offsprings = Crossover(parents)
-    #Mutation
-    offsprings = Mutation(offsprings)
-    #next-generation
-    ge = next_generation(ge, offsprings)
-    Print(ge)
-    print('第{}代，最佳fitness: {}'.format(count, Fitness(ge[0])))
-    if count == 1000:
-        print('完成，迭代次数: {}'.format(count))
-        break
-    count += 1
+    count = 0
+    while True:
+        #Selection
+        parents = Selection(ge)
+        #Crossover
+        offsprings = Crossover(parents)
+        #Mutation
+        offsprings = Mutation(offsprings)
+        #next-generation
+        ge = next_generation(ge, offsprings)
+        Print(ge)
+        print('第{}代，最佳fitness: {}'.format(count, Fitness(ge[0])))
+        if count == 1000:
+            print('完成，迭代次数: {}'.format(count))
+            break
+        count += 1
